@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Xml.Serialization;
 
 namespace THNETII.OpenStreetMap.Osm
@@ -14,40 +16,47 @@ namespace THNETII.OpenStreetMap.Osm
 
         public override bool Equals(object obj)
         {
-            try { return RefNodeId == Convert.ToUInt64(obj); }
+            try { return RefNodeId == Convert.ToUInt64(obj, CultureInfo.InvariantCulture); }
             catch (InvalidCastException) { return Equals(obj as OsmWayNodeReference); }
         }
 
         public bool Equals(OsmWayNodeReference other)
         {
-            if (ReferenceEquals(null, other))
-                return false;
-            else if (ReferenceEquals(this, other))
-                return true;
-            else
-                return RefNodeId == other.RefNodeId;
+            switch (other)
+            {
+                case null:
+                    return false;
+                case OsmWayNodeReference _ when ReferenceEquals(this, other):
+                case OsmWayNodeReference _ when RefNodeId == other.RefNodeId:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         public bool Equals(ulong other) => other == (ulong)this;
 
+        [SuppressMessage("Usage", "CA2225: Operator overloads have named alternates", Justification = nameof(AsUInt64))]
         public static explicit operator ulong(OsmWayNodeReference @ref)
         {
-            if (ReferenceEquals(null, @ref))
+            if (@ref is null)
                 return 0UL;
             return @ref.RefNodeId;
         }
 
+        public ulong AsUInt64() => RefNodeId;
+
         public static bool operator ==(OsmWayNodeReference x, OsmWayNodeReference y)
         {
-            if (ReferenceEquals(null, x))
-                return ReferenceEquals(null, y);
+            if (x is null)
+                return y is null;
             return x.Equals(y);
         }
 
         public static bool operator !=(OsmWayNodeReference x, OsmWayNodeReference y)
         {
-            if (ReferenceEquals(null, x))
-                return !ReferenceEquals(null, y);
+            if (x is null)
+                return y is OsmWayNodeReference;
             return !x.Equals(y);
         }
     }
