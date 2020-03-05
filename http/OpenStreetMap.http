@@ -1,0 +1,21 @@
+@zoomLevel = 7
+@tileX = 63
+@tileY = 42
+
+###
+# @name osmTileGetRequest
+GET https://tile.openstreetmap.org/{{zoomLevel}}/{{tileX}}/{{tileY}}.png
+
+###
+# @name osmTileHeadRequest
+HEAD https://tile.openstreetmap.org/{{zoomLevel}}/{{tileX}}/{{tileY}}.png
+
+###
+# @name osmTileGetIfNoneMatchRequest
+GET https://tile.openstreetmap.org/{{zoomLevel}}/{{tileX}}/{{tileY}}.png
+If-None-Match: {{osmTileGetRequest.response.headers.ETag}}
+
+###
+# @name osmTileGetIfModifiedSinceRequest
+GET https://tile.openstreetmap.org/{{zoomLevel}}/{{tileX}}/{{tileY}}.png
+If-Modified-Since: {{osmTileGetRequest.response.headers.Date}}

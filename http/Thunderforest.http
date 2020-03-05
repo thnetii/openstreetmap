@@ -1,0 +1,17 @@
+@apiKey = {{$dotenv THUNDERFOREST_APIKEY}}
+@zoomLevel = 7
+@tileX = 63
+@tileY = 42
+
+###
+# @name TransportDarkHeadTileRequest
+HEAD https://tile.thunderforest.com/transport-dark/{{zoomLevel}}/{{tileX}}/{{tileY}}.png?apikey={{apiKey}}
+
+###
+# @name TransportDarkGetTileRequest
+GET https://tile.thunderforest.com/transport-dark/{{zoomLevel}}/{{tileX}}/{{tileY}}.png?apikey={{apiKey}}
+
+###
+# @name TransportDarkGetIfNoneMatchTileRequest
+GET https://tile.thunderforest.com/transport-dark/{{zoomLevel}}/{{tileX}}/{{tileY}}.png?apikey={{apiKey}}
+If-None-Match: {{TransportDarkGetTileRequest.response.headers.ETag}}
