@@ -8,11 +8,12 @@ namespace THNETII.OpenStreetMap.WebMercator
     public static class WebMercatorServiceCollectionExtensions
     {
         public static IServiceCollection AddWebMercatorClient(
-            this IServiceCollection services)
+            this IServiceCollection services, string name)
         {
             _ = services ?? throw new ArgumentNullException(nameof(services));
+            name ??= Options.DefaultName;
 
-            services.AddHttpClient(Options.DefaultName)
+            services.AddHttpClient(name)
                 .AddTypedClient((httpClient, serviceProvider) =>
                 {
                     var options = serviceProvider
