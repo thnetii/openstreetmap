@@ -16,7 +16,7 @@
       <Version>3.1.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Options">
-      <Version>3.1.3</Version>
+      <Version>3.1.4</Version>
     </PackageReference>
   </ItemGroup>
 
@@ -25,7 +25,7 @@
       <Version>1.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Options">
-      <Version>1.1.1</Version>
+      <Version>3.1.4</Version>
     </PackageReference>
   </ItemGroup>
 
